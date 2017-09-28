@@ -34,13 +34,13 @@ az group create -n $RG_NAME -l $LOC -o table
 echo "... RG created."
 echo "Creating VNET:${VNET_NAME} . with subnet: ${SUBNET1_NAME} - CIDR: ${SUBNET1_CIDR}"
 az network vnet create -g $RG_NAME -n $VNET_NAME --address-prefix $VNET_CIDR \
-        --subnet-name subnet1 --subnet-prefix $SUBNET1_CIDR \
-SUBNET1_ID=`az network vnet subnet show --vnet-name $VNET_NAME -g $RG_NAME -n $SUBNET1_NAME | jq -r '.id'`
+        --subnet-name $SUBNET1_NAME --subnet-prefix $SUBNET1_CIDR \
+export SUBNET1_ID=`az network vnet subnet show --vnet-name $VNET_NAME -g $RG_NAME -n $SUBNET1_NAME | jq -r '.id'`
 echo "Creating subnet: ${SUBNET2_NAME} - CIDR: ${SUBNET2_CIDR}"
-az network vnet subnet create -g $PREMISE_RG --vnet-name $PREMISE_VNET  -n $SUBNET2_NAME --address-prefix $SUBNET2_CIDR 
+az network vnet subnet create -g $RG_NAME --vnet-name $VNET_NAME  -n $SUBNET2_NAME --address-prefix $SUBNET2_CIDR 
 SUBNET2_ID=`az network vnet subnet show --vnet-name $VNET_NAME -g $RG_NAME -n $SUBNET2_NAME | jq -r '.id'`
 echo "Creating subnet: ${SUBNET3_NAME} - CIDR: ${SUBNET3_CIDR}"
-az network vnet subnet create -g $PREMISE_RG --vnet-name $PREMISE_VNET  -n $SUBNET3_NAME --address-prefix $SUBNET3_CIDR 
+az network vnet subnet create -g $RG_NAME --vnet-name $VNET_NAME  -n $SUBNET3_NAME --address-prefix $SUBNET3_CIDR 
 echo "... Vnet created"
 echo "Creating k8s cluster..."
 echo "K8s cluster name: ${CLUSTER_NAME}"
