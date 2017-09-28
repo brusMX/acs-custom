@@ -33,21 +33,21 @@ az group create -n $RG_NAME -l $LOC -o table
 echo "... RG created."
 echo "Creating VNET:${VNET_NAME} . with subnet: ${SUBNET1_NAME} - CIDR: ${SUBNET1_CIDR}"
 az network vnet create -g $RG_NAME -n $VNET_NAME --address-prefix $VNET_CIDR \
-        --subnet-name $SUBNET1_NAME --subnet-prefix $SUBNET1_CIDR
+        --subnet-name $SUBNET1_NAME --subnet-prefix $SUBNET1_CIDR -o table
 export SUBNET1_ID=`az network vnet subnet show --vnet-name $VNET_NAME -g $RG_NAME -n $SUBNET1_NAME | jq -r '.id'`
 echo "Creating subnet: ${SUBNET2_NAME} - CIDR: ${SUBNET2_CIDR}"
-az network vnet subnet create -g $RG_NAME --vnet-name $VNET_NAME  -n $SUBNET2_NAME --address-prefix $SUBNET2_CIDR 
+az network vnet subnet create -g $RG_NAME --vnet-name $VNET_NAME  -n $SUBNET2_NAME --address-prefix $SUBNET2_CIDR -o table
 SUBNET2_ID=`az network vnet subnet show --vnet-name $VNET_NAME -g $RG_NAME -n $SUBNET2_NAME | jq -r '.id'`
 echo "Creating subnet: ${SUBNET3_NAME} - CIDR: ${SUBNET3_CIDR}"
-az network vnet subnet create -g $RG_NAME --vnet-name $VNET_NAME  -n $SUBNET3_NAME --address-prefix $SUBNET3_CIDR 
+az network vnet subnet create -g $RG_NAME --vnet-name $VNET_NAME  -n $SUBNET3_NAME --address-prefix $SUBNET3_CIDR -o table
 echo "... Vnet created"
 echo "Creating k8s cluster..."
 echo "K8s cluster name: ${CLUSTER_NAME}"
 echo "Resource group name: ${RG_NAME}"
 echo "Location: ${RG_NAME}"
-echo "Agent pools: ${AGENT_POOLS}"
 echo "CustomVNET: "
 AGENT_POOLS="[{'name':'agentpool1','vmSize':'Standard_DS2_v2_Promo','count':1, 'vnetSubnetId': ${SUBNET1_ID} },{'name':'agentpool2','vmSize':'Standard_DS3_v2_Promo','count':1, 'vnetSubnetId': ${SUBNET1_ID}}]"
+echo "Agent pools: ${AGENT_POOLS}"
 
 az acs create -n $CLUSTER_NAME -g $RG_NAME -t kubernetes \
     -a "${AGENT_POOLS}" \
