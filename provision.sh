@@ -57,8 +57,9 @@ az acs create -n $CLUSTER_NAME -g $RG_NAME -t kubernetes \
     --master-first-consecutive-static-ip $FIRST_IP_MASTER \
     -o table
 echo ".... k8s deployed"
-
-
+az acs kubernetes get-credentials -g $RG_NAME -n $CLUSTER_NAME
+kubectl cluster-info
+kubectl get nodes
 else
     echo "Your subscription couldn't be found, make sure you have logged in:"
     echo "az login"
