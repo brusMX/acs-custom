@@ -5,7 +5,7 @@
 # - Azure Cli 2.0
 # - jq
 #
-# Example of usage: 
+# Example of usage:
 # ./create-acs-k8s-custom-agent-pools.sh
 
 # Making sure it's connected
@@ -14,7 +14,7 @@ DEFAULT_ACCOUNT_ID=`echo $DEFAULT_ACCOUNT | jq -r '.id'`
 if [ ! -z "$DEFAULT_ACCOUNT_ID" ]; then
 # Create resource groups
 RG_NAME=$(mktemp k8s-mixed-agents-rg-XXXXXXX)
-# Supported regions for V2 are: 
+# Supported regions for V2 are:
 # UK West, UK South, West Central US, West US 2,
 # Canada, East Canada, Central West India, South India, Central India
 LOC=centralindia
@@ -46,14 +46,15 @@ echo "K8s cluster name: ${CLUSTER_NAME}"
 echo "Resource group name: ${RG_NAME}"
 echo "Location: ${RG_NAME}"
 echo "CustomVNET: "
-AGENT_POOLS="[{'name':'agentpool1','vmSize':'Standard_DS2_v2_Promo','count':1, 'vnetSubnetId': ${SUBNET1_ID} },{'name':'agentpool2','vmSize':'Standard_DS3_v2_Promo','count':1, 'vnetSubnetId': ${SUBNET1_ID}}]"
+AGENT_POOLS="[{'name':'agentpool1','vmSize':'Standard_DS2_v2_Promo','count':1, 'vnetSubnetId': '${SUBNET1_ID}' },{'name':'agentpool2','vmSize':'Standard_DS3_v2_Promo','count':1, 'vnetSubnetId': '${SUBNET1_ID}'}]"
 echo "Agent pools: ${AGENT_POOLS}"
 
 az acs create -n $CLUSTER_NAME -g $RG_NAME -t kubernetes \
-    -a $AGENT_POOLS \
+    -a "${AGENT_POOLS}" \
     --generate-ssh-keys \
     --agent-vnet-subnet-id $SUBNET1_ID \
     --master-vnet-subnet-id $SUBNET1_ID \
+    --master-vm-size Standard_DS2_v2_Promo \
     --master-first-consecutive-static-ip $FIRST_IP_MASTER \
     -o table
 echo ".... k8s deployed"
