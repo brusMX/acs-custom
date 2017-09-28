@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: eureka
-        image: acsk8s.azurecr.io/eurekaserver:v1
+        image: maninderjit/eurser:0.1
         ports:
         - containerPort: 8761
       imagePullSecrets:

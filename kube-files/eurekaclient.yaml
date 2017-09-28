@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: eurekaclient
-        image: acsk8s.azurecr.io/eurekaclientservice:v1
+        image: maninderjit/eurcli:0.1
         ports:
         - containerPort: 8090
         env:

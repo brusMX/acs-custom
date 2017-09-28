@@ -1,0 +1,19 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: eurekaclient
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: eurekaclient
+    spec:
+      containers:
+      - name: {{ .Values.eurcliservice.deploymentName }}
+        image: {{ .Values.eurcliimage.repository }}:{{ .Values.eurcliimage.tag }}
+        ports:
+        - containerPort: 8090
+        env:
+        - name: {{ .Values.eurserservice.envVariableName }} 
+          value: {{ .Values.eurserservice.url }}

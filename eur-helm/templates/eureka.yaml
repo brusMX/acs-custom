@@ -1,0 +1,20 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Values.eurserservice.deploymentName }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.eurserservice.deploymentName }}
+        heritage: {{ .Release.Service }}
+        release: {{ .Release.Name }}
+        chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    spec:
+      containers:
+      - name: {{ .Values.eurserservice.deploymentName }}
+        image: {{ .Values.eurserimage.repository }}:{{ .Values.eurserimage.tag }}
+        imagePullPolicy: {{ .Values.eurserimage.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.eurserservice.containerPort }}
