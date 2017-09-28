@@ -19,7 +19,6 @@ RG_NAME=$(mktemp k8s-mixed-agents-rg-XXXXXXX)
 # Canada, East Canada, Central West India, South India, Central India
 LOC=centralindia
 CLUSTER_NAME=mixed-k8s-cluster
-AGENT_POOLS="[{'name':'agentpool1','vmSize':'Standard_DS2_v2_Promo','count':1},{'name':'agentpool2','vmSize':'Standard_DS3_v2_Promo','count':1}]"
 VNET_NAME=kingdom
 VNET_CIDR=10.1.0.0/16
 SUBNET1_NAME=subnet1
@@ -48,10 +47,13 @@ echo "Resource group name: ${RG_NAME}"
 echo "Location: ${RG_NAME}"
 echo "Agent pools: ${AGENT_POOLS}"
 echo "CustomVNET: "
+AGENT_POOLS="[{'name':'agentpool1','vmSize':'Standard_DS2_v2_Promo','count':1, 'vnetSubnetId': ${SUBNET1_ID} },{'name':'agentpool2','vmSize':'Standard_DS3_v2_Promo','count':1, 'vnetSubnetId': ${SUBNET1_ID}}]"
+
 az acs create -n $CLUSTER_NAME -g $RG_NAME -t kubernetes \
     -a "${AGENT_POOLS}" \
     --generate-ssh-keys \
     --agent-vnet-subnet-id $SUBNET1_ID \
+    --master-vnet-subnet-id $SUBNET1_ID \
     --master-first-consecutive-static-ip $FIRST_IP_MASTER \
     -o table
 echo ".... k8s deployed"
