@@ -50,7 +50,7 @@ AGENT_POOLS="[{'name':'agentpool1','vmSize':'Standard_DS2_v2_Promo','count':1, '
 echo "Agent pools: ${AGENT_POOLS}"
 
 az acs create -n $CLUSTER_NAME -g $RG_NAME -t kubernetes \
-    -a "${AGENT_POOLS}" \
+    -a $AGENT_POOLS \
     --generate-ssh-keys \
     --agent-vnet-subnet-id $SUBNET1_ID \
     --master-vnet-subnet-id $SUBNET1_ID \
