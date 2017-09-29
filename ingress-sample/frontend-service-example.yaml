@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: webapp
+    role: frontend
+  type: NodePort
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-go
+  labels:
+    app: webapp
+    role: frontend
+spec:
+  containers:
+    - name: example-go
+      image: deis/example-go
+      ports:
+        - containerPort: 8080
+      env:
+      - name: PORT
+        value: "8080"
