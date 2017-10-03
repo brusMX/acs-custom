@@ -9,4 +9,4 @@ spec:
   ports:
   - port: {{ .Values.eurcliservice.containerPort }}
   selector:
-    app: {{ .Values.eurcliservice.name }}
+    app: {{ .Values.eurcliservice.deploymentName }}
