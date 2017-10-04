@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: eurekaserviceingress
+spec:
+  rules:
+  - host: mani.eureka.com
+    http:
+      paths:
+      - path: 
+        backend:
+          serviceName: eurekaservice
+          servicePort: 8761
