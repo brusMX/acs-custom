@@ -26,6 +26,7 @@ az storage account create -n pvstoaccpoc -l westcentralus -g acspvresgrp --sku S
 export current_env_conn_string=$(az storage account show-connection-string -n pvstoaccpoc -g acspvresgrp --query 'connectionString' -o tsv)
 # create secret
 az storage share create --name pvfileshare --quota 2048 --connection-string $current_env_conn_string
+# modify azure-secret.template.yaml to azure-secret.yaml, add name and key of your storage account
 kubectl apply -f azure-secret.yaml
 kubectl apply -f persistent-volume.yaml
 
