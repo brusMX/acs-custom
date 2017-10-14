@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: croc-hunter-service
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  labels:
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: croc-hunter
+  type: LoadBalancer
