@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: testtopicpubsub3
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: testtopicpubsub3
+    spec:
+      containers:
+      - name: testtopicpubsubv01
+        image: maninderjit/topicprocessor:0.1
+        env:
+        - name: SOURCE_TOPIC_CONNECTIONSTRING
+          value: ""
+        - name: SOURCE_SUBSCRIPTIONNAME
+          value: 
+        - name: TARGET_TOPIC_NAME
+          value: 
+        - name: TARGET_TOPIC_CONNECTIONSTRING
+          value: ""
+        - name: SOURCE_TOPICNAME
+          value: 
+        ports:
+        - containerPort: 8095
